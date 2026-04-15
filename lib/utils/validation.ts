@@ -30,7 +30,7 @@ export const quoteRequestSchema = z.object({
   company: companyNameSchema,
   email: emailSchema,
   phone: phoneSchema,
-  service: z.enum(["dynamo", "balancing", "consumables", "spareparts", "consultation"]),
+  service: z.enum(["dynamo", "balancing", "consultation"]),
   motorType: z.string().optional(),
   motorBrand: z.string().optional(),
   motorPower: z.string().optional(),

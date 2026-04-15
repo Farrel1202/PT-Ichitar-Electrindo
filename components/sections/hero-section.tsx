@@ -1,123 +1,172 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import Link from "next/link"
+import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Play, Shield, Zap, Award } from "lucide-react"
+import { ArrowDown } from "lucide-react"
 
-const features = [
-  { icon: Shield, text: "ISO Certified" },
-  { icon: Zap, text: "Fast Service" },
-  { icon: Award, text: "20+ Years" },
-]
+const HERO_VIDEO_PRIMARY = "/hero-video-safe.mp4"
+const HERO_VIDEO_FALLBACK = "/hero-video.mp4"
 
 export default function HeroSection() {
   const [isVisible, setIsVisible] = useState(false)
+  const heroSectionRef = useRef<HTMLElement | null>(null)
+  const videoRef = useRef<HTMLVideoElement | null>(null)
 
   useEffect(() => {
     setIsVisible(true)
+
+    const video = videoRef.current
+    if (!video) return
+
+    let usingFallback = false
+
+    const attemptPlay = () => {
+      const playback = video.play()
+      if (playback && typeof playback.then === "function") {
+        playback.catch(() => {})
+      }
+    }
+
+    const setSourceAndPlay = (src: string) => {
+      if (video.getAttribute("src") !== src) {
+        video.setAttribute("src", src)
+        video.load()
+      }
+      attemptPlay()
+    }
+
+    const handleVideoError = () => {
+      if (!usingFallback) {
+        usingFallback = true
+        setSourceAndPlay(HERO_VIDEO_FALLBACK)
+      }
+    }
+
+    const tryPlay = () => {
+      video.muted = true
+      video.playsInline = true
+      setSourceAndPlay(HERO_VIDEO_PRIMARY)
+
+      // Some mobile browsers block autoplay until first interaction.
+      const startOnInteract = () => {
+        attemptPlay()
+        window.removeEventListener("touchstart", startOnInteract)
+        window.removeEventListener("click", startOnInteract)
+      }
+      window.addEventListener("touchstart", startOnInteract, { once: true })
+      window.addEventListener("click", startOnInteract, { once: true })
+    }
+
+    tryPlay()
+    const ensurePlayback = window.setInterval(() => {
+      if (!video.paused && video.currentTime > 0.1) return
+      tryPlay()
+    }, 1800)
+
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        attemptPlay()
+      }
+    }
+
+    video.addEventListener("error", handleVideoError)
+    video.addEventListener("stalled", attemptPlay)
+    video.addEventListener("suspend", attemptPlay)
+    document.addEventListener("visibilitychange", handleVisibility)
+
+    return () => {
+      window.clearInterval(ensurePlayback)
+      video.removeEventListener("error", handleVideoError)
+      video.removeEventListener("stalled", attemptPlay)
+      video.removeEventListener("suspend", attemptPlay)
+      document.removeEventListener("visibilitychange", handleVisibility)
+    }
   }, [])
 
+  const scrollToNextSection = () => {
+    const section = heroSectionRef.current
+    if (!section) return
+
+    const nextSection = section.nextElementSibling as HTMLElement | null
+    if (!nextSection) return
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+    nextSection.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" })
+  }
+
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background Image with Overlay */}
+    <section ref={heroSectionRef} className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Background Video with Overlay */}
       <div className="absolute inset-0">
-        <img
-          src="/industrial-factory-motor-machinery-dark-atmosphere.jpg"
-          alt="Industrial motor repair workshop"
+        <div className="absolute inset-0 bg-black" />
+        <video
+          ref={videoRef}
           className="w-full h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/hero-video-poster.jpg"
+          preload="metadata"
+          aria-hidden="true"
+          disablePictureInPicture
         />
-        <div className="absolute inset-0 bg-foreground/80" />
+        <div className="absolute inset-0 bg-linear-to-r from-black/36 via-black/18 to-black/6" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 14% 34%, rgba(22, 163, 74, 0.14), rgba(0, 0, 0, 0) 38%)",
+          }}
+        />
       </div>
 
       {/* Content */}
-      <div className="relative container mx-auto px-4 py-32 lg:py-40">
-        <div className="max-w-3xl">
-          {/* Badge */}
-          <div
-            className={`transition-all duration-700 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            <Badge
-              variant="secondary"
-              className="mb-6 px-4 py-2 text-sm font-medium bg-primary/20 text-primary border-primary/30"
-            >
-              20+ Tahun Keunggulan Industri
-            </Badge>
-          </div>
-
-          {/* Heading */}
+      <div className="relative container mx-auto px-4 pt-36 pb-24 lg:pt-44 lg:pb-28">
+        <div className="max-w-5xl mx-auto text-center">
           <h1
-            className={`text-4xl md:text-5xl lg:text-6xl font-bold text-background leading-tight mb-6 transition-all duration-700 delay-100 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            className={`text-[2.35rem] md:text-6xl lg:text-7xl font-bold leading-[1.06] mb-10 transition-all duration-700 delay-100 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
+            style={{ textShadow: "0 12px 30px rgba(0, 0, 0, 0.35)" }}
           >
-            <span className="text-balance">
-              Memberdayakan Industri. <span className="text-primary">Mengembalikan Presisi.</span>
+            <span className="text-balance block text-transparent bg-clip-text bg-linear-to-b from-white via-white/95 to-white/82">
+              Motor Industri
+              <br />
+              <span className="bg-clip-text text-transparent bg-linear-to-r from-emerald-200 via-emerald-300 to-cyan-200">
+                Restored to Peak Performance, Production Stays Stable
+              </span>
             </span>
           </h1>
-
-          {/* Subtitle */}
           <p
-            className={`text-lg md:text-xl text-background/80 mb-8 max-w-2xl transition-all duration-700 delay-200 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            className={`mx-auto max-w-2xl text-base md:text-lg text-white/82 tracking-[0.01em] transition-all duration-700 delay-200 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
             }`}
+            style={{ textShadow: "0 8px 22px rgba(0, 0, 0, 0.3)" }}
           >
-            Spesialis perbaikan dynamo motor, shaft balancing, dan supply consumables industri. Dipercaya oleh 500+
-            perusahaan di seluruh Indonesia.
+            Precision rewinding for industrial motors, delivered with fast turnaround and dependable workmanship.
           </p>
-
-          {/* CTA Buttons */}
-          <div
-            className={`flex flex-col sm:flex-row gap-4 mb-12 transition-all duration-700 delay-300 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            <Button asChild size="lg" className="text-base px-8">
-              <Link href="/services">
-                Layanan Kami
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="text-base px-8 bg-transparent border-background/30 text-background hover:bg-background/10 hover:text-background"
-            >
-              <a href="tel:+622188676776">
-                <Play className="mr-2 w-5 h-5" />
-                Hubungi Sekarang
-              </a>
-            </Button>
-          </div>
-
-          {/* Features */}
-          <div
-            className={`flex flex-wrap gap-6 transition-all duration-700 delay-400 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            {features.map((feature) => (
-              <div key={feature.text} className="flex items-center gap-2 text-background/80">
-                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                  <feature.icon className="w-4 h-4 text-primary" />
-                </div>
-                <span className="text-sm font-medium">{feature.text}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 rounded-full border-2 border-background/30 flex items-start justify-center p-2">
-          <div className="w-1 h-2 bg-background/50 rounded-full" />
-        </div>
+      <div
+        className={`absolute bottom-8 left-1/2 -translate-x-1/2 transition-all duration-700 delay-300 ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+        }`}
+      >
+        <Button
+          type="button"
+          variant="outline"
+          size="icon"
+          className="size-16 rounded-full border-background/55 bg-black/25 text-background hover:text-background hover:bg-background/15 backdrop-blur-sm motion-safe:animate-bounce"
+          onClick={scrollToNextSection}
+          aria-label="Lihat profil perusahaan"
+        >
+          <ArrowDown className="w-7 h-7" />
+        </Button>
       </div>
+
     </section>
   )
 }

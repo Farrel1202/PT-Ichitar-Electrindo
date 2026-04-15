@@ -178,8 +178,6 @@ export default function ContactForm({ onSuccess, showWhatsAppRedirect = true }: 
           <SelectContent>
             <SelectItem value="dynamo">Dynamo Motor Service</SelectItem>
             <SelectItem value="balancing">Shaft Balancing</SelectItem>
-            <SelectItem value="consumables">Consumables Supply</SelectItem>
-            <SelectItem value="spareparts">Spare Parts</SelectItem>
             <SelectItem value="consultation">Konsultasi</SelectItem>
           </SelectContent>
         </Select>

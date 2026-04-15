@@ -19,7 +19,7 @@ export function ServiceCard({ title, description, href, image, icon, className }
     <Link href={href}>
       <Card
         className={cn(
-          "group overflow-hidden border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg h-full",
+          "group overflow-hidden border-border/50 hover:border-primary/50 transition-all duration-200 ease-out hover:shadow-lg hover:-translate-y-0.5 h-full",
           className,
         )}
       >
@@ -29,9 +29,9 @@ export function ServiceCard({ title, description, href, image, icon, className }
               src={image || "/placeholder.svg"}
               alt={title}
               fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-background/80 to-transparent" />
           </div>
         )}
         <CardContent className="p-6">

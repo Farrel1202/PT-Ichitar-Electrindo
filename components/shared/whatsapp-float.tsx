@@ -55,7 +55,7 @@ export default function WhatsAppFloat() {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full bg-[#25D366] hover:bg-[#20BD5A] text-white font-medium py-3 px-4 rounded-lg transition-colors"
+              className="flex items-center justify-center gap-2 w-full bg-[#25D366] hover:bg-[#20BD5A] text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 ease-out"
             >
               <MessageCircle className="w-5 h-5" />
               Mulai Chat
@@ -68,7 +68,7 @@ export default function WhatsAppFloat() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all",
+          "w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 ease-out active:translate-y-px",
           isOpen ? "bg-foreground text-background" : "bg-[#25D366] text-white hover:bg-[#20BD5A]",
         )}
         aria-label="Chat via WhatsApp"

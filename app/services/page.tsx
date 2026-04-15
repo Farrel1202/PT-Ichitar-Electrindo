@@ -6,12 +6,12 @@ import WhatsAppFloat from "@/components/shared/whatsapp-float"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Cog, Gauge, Package, Wrench, ArrowRight, CheckCircle, Phone } from "lucide-react"
+import { Cog, Gauge, ArrowRight, CheckCircle, Phone } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Layanan Kami - PT Ichtiar Electrindo",
   description:
-    "Layanan perbaikan dynamo motor, shaft balancing, supply consumables dan spare parts industri. Solusi lengkap untuk kebutuhan motor industri Anda.",
+    "Layanan perbaikan dynamo motor dan shaft balancing. Solusi lengkap untuk kebutuhan motor industri Anda.",
 }
 
 const services = [
@@ -46,38 +46,6 @@ const services = [
       "Balancing report & certificate",
     ],
     image: "/precision-balancing-machine-industrial-equipment.jpg",
-  },
-  {
-    icon: Package,
-    title: "Consumables Supply",
-    description:
-      "Penyedia consumables industri berkualitas seperti bearing, seal, grease, dan material pendukung lainnya.",
-    href: "/services/consumables",
-    features: [
-      "SKF, FAG, NSK Bearing",
-      "Industrial grease & lubricant",
-      "Sealing products",
-      "Insulation materials",
-      "Varnish & resin",
-      "Copper wire & conductor",
-    ],
-    image: "/industrial-consumables-bearings-seals-grease-parts.jpg",
-  },
-  {
-    icon: Wrench,
-    title: "Spare Parts Supply",
-    description:
-      "Supply spare parts original dan aftermarket untuk berbagai merk motor industri dengan harga kompetitif.",
-    href: "/services/spare-parts",
-    features: [
-      "Motor components OEM",
-      "Electrical parts",
-      "Mechanical parts",
-      "Custom fabrication",
-      "Import parts service",
-      "Competitive pricing",
-    ],
-    image: "/industrial-spare-parts-motor-components-warehouse.jpg",
   },
 ]
 

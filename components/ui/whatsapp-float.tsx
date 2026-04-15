@@ -26,7 +26,6 @@ export function WhatsAppFloat() {
     { label: "Konsultasi Gratis", message: "Halo, saya ingin konsultasi gratis tentang perbaikan motor." },
     { label: "Minta Penawaran", message: "Halo, saya ingin meminta penawaran harga untuk jasa perbaikan." },
     { label: "Layanan Darurat", message: "Halo, saya butuh layanan perbaikan darurat 24 jam." },
-    { label: "Tanya Produk", message: "Halo, saya ingin bertanya tentang produk consumables." },
   ]
 
   if (!isVisible) return null

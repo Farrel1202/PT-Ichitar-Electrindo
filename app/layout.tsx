@@ -11,12 +11,11 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "PT Ichtiar Electrindo - Powering Industries. Restoring Precision",
   description:
-    "Spesialis perbaikan dynamo motor, shaft balancing, dan supply consumables industri. 20+ tahun pengalaman melayani 500+ klien di Indonesia.",
+    "Spesialis perbaikan dynamo motor dan shaft balancing industri. 20+ tahun pengalaman melayani 500+ klien di Indonesia.",
   keywords: [
     "perbaikan dynamo",
     "motor listrik",
     "shaft balancing",
-    "consumables industri",
     "bekasi",
     "jakarta",
     "industrial motor repair",

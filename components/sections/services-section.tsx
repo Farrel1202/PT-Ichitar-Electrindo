@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Cog, Gauge, Package, Wrench, ArrowRight } from "lucide-react"
+import { Cog, Gauge, ArrowRight } from "lucide-react"
 
 const services = [
   {
@@ -19,22 +19,6 @@ const services = [
       "Layanan balancing presisi untuk mengurangi getaran dan memperpanjang umur peralatan rotating equipment Anda.",
     href: "/services/shaft-balancing",
     features: ["Dynamic Balancing", "Static Balancing", "Vibration Analysis"],
-  },
-  {
-    icon: Package,
-    title: "Consumables Supply",
-    description:
-      "Penyedia consumables industri berkualitas seperti bearing, seal, grease, dan material pendukung lainnya.",
-    href: "/services/consumables",
-    features: ["SKF Bearing", "Industrial Grease", "Sealing Products"],
-  },
-  {
-    icon: Wrench,
-    title: "Spare Parts",
-    description:
-      "Supply spare parts original dan aftermarket untuk berbagai merk motor industri dengan harga kompetitif.",
-    href: "/services/spare-parts",
-    features: ["Motor Components", "Electrical Parts", "Custom Parts"],
   },
 ]
 
@@ -54,11 +38,11 @@ export default function ServicesSection() {
         </div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
           {services.map((service, index) => (
             <Card
               key={index}
-              className="group bg-card hover:bg-card/80 border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg"
+              className="group bg-card hover:bg-card/80 border-border hover:border-primary/50 transition-all duration-200 ease-out hover:shadow-lg hover:-translate-y-0.5"
             >
               <CardContent className="p-6">
                 {/* Icon */}

@@ -19,19 +19,19 @@ export default function AboutSection() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-4">
                 <img
-                  src="/industrial-motor-repair-workshop-technician-workin.jpg"
+                  src="/company.jpeg"
                   alt="Teknisi bekerja"
                   className="w-full h-48 object-cover rounded-lg"
                 />
                 <img
-                  src="/precision-balancing-machine-industrial-equipment.jpg"
+                  src="/workshop.jpg"
                   alt="Mesin balancing"
                   className="w-full h-64 object-cover rounded-lg"
                 />
               </div>
               <div className="pt-8">
                 <img
-                  src="/industrial-electric-motor-dynamo-repair-service.jpg"
+                  src="/workshop2.jpg"
                   alt="Motor industri"
                   className="w-full h-80 object-cover rounded-lg"
                 />
@@ -56,8 +56,7 @@ export default function AboutSection() {
               komitmen pada kualitas dan ketepatan waktu.
             </p>
             <p className="text-muted-foreground mb-8 leading-relaxed">
-              Dengan dukungan tim teknisi berpengalaman dan fasilitas workshop yang lengkap, kami siap menjadi mitra
-              andalan Anda dalam menjaga kelancaran operasional industri.
+            Didukung oleh tim teknisi berpengalaman dan fasilitas workshop yang lengkap, kami hadir dengan layanan perbaikan terpercaya untuk memastikan operasional industri Anda tetap optimal.
             </p>
 
             {/* Highlights */}

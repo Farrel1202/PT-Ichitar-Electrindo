@@ -90,14 +90,14 @@ export default function PortfolioSection() {
           {filteredProjects.map((project, index) => (
             <div
               key={index}
-              className="group relative overflow-hidden rounded-lg bg-card border border-border hover:border-primary/50 transition-all duration-300"
+              className="group relative overflow-hidden rounded-lg bg-card border border-border hover:border-primary/50 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg"
             >
               {/* Image */}
-              <div className="aspect-[4/3] overflow-hidden">
+              <div className="aspect-4/3 overflow-hidden">
                 <img
                   src={project.image || "/placeholder.svg"}
                   alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                 />
               </div>
 
@@ -115,7 +115,7 @@ export default function PortfolioSection() {
               {/* Hover Overlay Link */}
               <Link
                 href="/portfolio"
-                className="absolute inset-0 flex items-center justify-center bg-foreground/80 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute inset-0 flex items-center justify-center bg-foreground/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-out"
               >
                 <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
                   <ArrowUpRight className="w-6 h-6 text-primary-foreground" />

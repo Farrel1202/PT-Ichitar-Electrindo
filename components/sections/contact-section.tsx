@@ -103,20 +103,6 @@ export default function ContactSection() {
                 </CardContent>
               </Card>
             ))}
-
-            {/* Map */}
-            <div className="mt-6 rounded-lg overflow-hidden h-48 bg-muted">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.234!2d107.0294477!3d-6.2027649!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698948324ece9f:0xebbc1ecc3baf9e98!2sIchtiar%20Electrindo!5e0!3m2!1sen!2sid!4v1234567890"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="PT Ichtiar Electrindo Location"
-              />
-            </div>
           </div>
 
           {/* Contact Form */}
@@ -165,8 +151,6 @@ export default function ContactSection() {
                       <SelectContent>
                         <SelectItem value="dynamo">Dynamo Motor Service</SelectItem>
                         <SelectItem value="balancing">Shaft Balancing</SelectItem>
-                        <SelectItem value="consumables">Consumables Supply</SelectItem>
-                        <SelectItem value="spareparts">Spare Parts</SelectItem>
                         <SelectItem value="consultation">Konsultasi</SelectItem>
                       </SelectContent>
                     </Select>

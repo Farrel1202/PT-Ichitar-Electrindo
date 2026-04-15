@@ -5,8 +5,6 @@ const footerLinks = {
   layanan: [
     { name: "Dynamo Motor Service", href: "/services/dynamo-motor" },
     { name: "Shaft Balancing", href: "/services/shaft-balancing" },
-    { name: "Consumables", href: "/services/consumables" },
-    { name: "Spare Parts", href: "/services/spare-parts" },
   ],
   perusahaan: [
     { name: "Tentang Kami", href: "/about" },
@@ -38,8 +36,8 @@ export default function Footer() {
           {/* Company Info */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">IE</span>
+              <div>
+              <img src="/pt-ichtiar-logo.PNG" alt="PT Ichtiar Electrindo" className="h-10 w-auto" />
               </div>
               <div>
                 <p className="font-bold text-white text-sm leading-tight">PT Ichtiar</p>
@@ -47,8 +45,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-gray-300 text-sm mb-6 max-w-sm">
-              Spesialis perbaikan dynamo motor dan shaft balancing industri terpercaya dengan 20+ tahun pengalaman
-              melayani berbagai industri di Indonesia.
+            Spesialis perbaikan Electrical Motor Rewinding & Repair Services.
             </p>
 
             {/* Contact Info */}
@@ -73,7 +70,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-3 text-sm text-gray-300">
                 <Clock className="w-4 h-4 text-primary" />
-                Senin - Sabtu: 08:00 - 17:00
+                Senin - Jumat: 08:00 - 17:00
               </div>
             </div>
           </div>
