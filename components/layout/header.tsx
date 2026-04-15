@@ -33,10 +33,17 @@ export default function Header() {
   const shouldUseDarkText = !isHomePage || isScrolled
 
   useEffect(() => {
+    let ticking = false
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        ticking = false
+        const next = window.scrollY > 10
+        setIsScrolled((prev) => (prev === next ? prev : next))
+      })
     }
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -44,7 +51,7 @@ export default function Header() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        shouldUseDarkText ? "bg-background/95 backdrop-blur-md shadow-sm border-b border-border" : "bg-transparent",
+        shouldUseDarkText ? "bg-background/98 shadow-sm border-b border-border" : "bg-transparent",
       )}
     >
       <div className="container mx-auto px-4">

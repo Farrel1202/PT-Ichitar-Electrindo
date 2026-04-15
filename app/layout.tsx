@@ -1,10 +1,14 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import Script from "next/script"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { WhatsAppFloat } from "@/components/ui/whatsapp-float"
 import { ScrollToTop } from "@/components/ui/scroll-to-top"
+import { SplashScreen } from "@/components/splash-screen"
+import { SplashScreenStatic } from "@/components/splash-screen-static"
+import { SPLASH_STORAGE_KEY } from "@/lib/splash-constants"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -47,8 +51,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
-      <body className={`font-sans antialiased`}>
+      <body className="font-sans antialiased" suppressHydrationWarning>
+        <Script id="splash-gate" strategy="beforeInteractive">
+          {`(function(){function s(){try{var b=document.body;if(!b)return;if(sessionStorage.getItem(${JSON.stringify(SPLASH_STORAGE_KEY)})==="1")b.classList.add("splash-skip")}catch(e){}}if(document.body)s();else document.addEventListener("DOMContentLoaded",s)})();`}
+        </Script>
+        <SplashScreenStatic />
         {children}
+        <SplashScreen />
         <WhatsAppFloat />
         <ScrollToTop />
         <Analytics />

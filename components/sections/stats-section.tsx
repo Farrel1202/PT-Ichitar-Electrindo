@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const stats = [
   { value: 20, suffix: "+", label: "Tahun Pengalaman" },
@@ -9,65 +9,76 @@ const stats = [
   { value: 99, suffix: "%", label: "Tingkat Kepuasan" },
 ]
 
-function AnimatedCounter({ target, suffix }: { target: number; suffix: string }) {
-  const [count, setCount] = useState(0)
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
+/** Ease-out cubic — one t value drives all columns (cheap). */
+function easeOutCubic(t: number) {
+  const p = 1 - t
+  return 1 - p * p * p
+}
+
+export default function StatsSection() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const [counts, setCounts] = useState<number[]>(() => stats.map(() => 0))
+  const [started, setStarted] = useState(false)
+  const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 },
-    )
+    const el = sectionRef.current
+    if (!el) return
 
-    if (ref.current) {
-      observer.observe(ref.current)
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (reduceMotion) {
+      setCounts(stats.map((s) => s.value))
+      return
     }
 
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        observer.disconnect()
+        setStarted(true)
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.15 },
+    )
+
+    observer.observe(el)
     return () => observer.disconnect()
   }, [])
 
   useEffect(() => {
-    if (!isVisible) return
+    if (!started) return
 
-    const duration = 2000
-    const steps = 60
-    const increment = target / steps
-    let current = 0
+    const durationMs = 1100
+    const targets = stats.map((s) => s.value)
+    const t0 = performance.now()
 
-    const timer = setInterval(() => {
-      current += increment
-      if (current >= target) {
-        setCount(target)
-        clearInterval(timer)
+    const tick = (now: number) => {
+      const elapsed = now - t0
+      const t = Math.min(1, elapsed / durationMs)
+      const e = easeOutCubic(t)
+      setCounts(targets.map((target) => Math.round(target * e)))
+      if (t < 1) {
+        rafRef.current = requestAnimationFrame(tick)
       } else {
-        setCount(Math.floor(current))
+        rafRef.current = null
       }
-    }, duration / steps)
+    }
 
-    return () => clearInterval(timer)
-  }, [isVisible, target])
+    rafRef.current = requestAnimationFrame(tick)
+    return () => {
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current)
+    }
+  }, [started])
 
   return (
-    <div ref={ref} className="text-4xl md:text-5xl font-bold text-foreground">
-      {count.toLocaleString()}
-      {suffix}
-    </div>
-  )
-}
-
-export default function StatsSection() {
-  return (
-    <section className="py-16 lg:py-20 bg-secondary">
+    <section ref={sectionRef} className="py-16 lg:py-20 bg-secondary">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {stats.map((stat, index) => (
-            <div key={index} className="text-center">
-              <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+            <div key={stat.label} className="text-center">
+              <div className="text-4xl md:text-5xl font-bold text-foreground tabular-nums">
+                {counts[index]?.toLocaleString() ?? 0}
+                {stat.suffix}
+              </div>
               <p className="mt-2 text-muted-foreground font-medium">{stat.label}</p>
             </div>
           ))}

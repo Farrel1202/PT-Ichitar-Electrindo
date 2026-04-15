@@ -25,3 +25,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Full-resolution hero master (rebuild assets with: pnpm media:compress-hero)
+public/media/source/*
+!public/media/source/.gitkeep
+
+# Raw 4K hero clip at repo root (keep local; commit compressed files under public/media/ instead)
+public/Industrial Worker Grinding Metal 4K.mp4

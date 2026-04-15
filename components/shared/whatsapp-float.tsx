@@ -76,12 +76,11 @@ export default function WhatsAppFloat() {
         {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
       </button>
 
-      {/* Pulse Animation */}
       {!isOpen && (
-        <span className="absolute -top-1 -right-1 w-4 h-4">
-          <span className="absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-75 animate-ping" />
-          <span className="relative inline-flex rounded-full h-4 w-4 bg-[#25D366]" />
-        </span>
+        <span
+          className="absolute -top-0.5 -right-0.5 size-3 rounded-full border-2 border-background bg-[#25D366]"
+          aria-hidden
+        />
       )}
     </div>
   )

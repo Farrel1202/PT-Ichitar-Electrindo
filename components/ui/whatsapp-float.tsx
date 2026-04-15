@@ -87,10 +87,6 @@ export function WhatsAppFloat() {
         {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
       </button>
 
-      {/* Pulse Animation */}
-      {!isOpen && (
-        <span className="absolute bottom-0 right-0 w-14 h-14 rounded-full bg-[#25D366] animate-ping opacity-20 pointer-events-none" />
-      )}
     </div>
   )
 }

@@ -129,8 +129,9 @@
   --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Native smooth scroll on the whole document is expensive with video + fixed header; use `auto` and opt-in smooth where needed. */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 /* Subtle micro-interactions for interactive elements */
@@ -140,8 +141,8 @@ button,
 input,
 textarea,
 select {
-  transition-property: color, background-color, border-color, opacity, box-shadow, transform;
-  transition-duration: var(--motion-base);
+  transition-property: color, background-color, border-color, opacity;
+  transition-duration: var(--motion-fast);
   transition-timing-function: var(--ease-out);
 }
 
@@ -208,4 +209,54 @@ button:active,
 
 .animation-delay-400 {
   animation-delay: 400ms;
+}
+
+/* Splash: class on body (not html) so React hydration matches server markup */
+body.splash-skip #__splash {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #__splash {
+    display: none !important;
+  }
+}
+
+/* Exit transition driven by .splash--leave (see SplashScreen client) */
+.splash-shell {
+  transition:
+    opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.splash-shell.splash--leave {
+  opacity: 0;
+  transform: scale(1.03);
+  pointer-events: none;
+}
+
+body.splash-lock {
+  overflow: hidden;
+}
+
+@keyframes splash-logo-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes splash-line {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
 }
